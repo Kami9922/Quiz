@@ -8,7 +8,7 @@ const EditQuestionContainer = ({ className }) => {
 		<div className={className}>
 			<div>Вопрос 1:</div>
 			<div className='edit-question-active'>
-				<Button>+</Button>
+				<Button height='50px'>+</Button>
 				<EditAnswer></EditAnswer>
 			</div>
 			<div className='angle-down'>

@@ -22,8 +22,8 @@ export const Button = styled(ButtonContainer)`
 	align-items: center;
 	font-size: 18px;
 	width: ${({ width = '100%' }) => width};
+	height: ${({ height = '60px' }) => height};
 	background-color: ${({ backgroundColor = 'default' }) => backgroundColor};
-	height: 60px;
 	border: 1px solid #000;
 	border-radius: 10px;
 	cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
