@@ -6,11 +6,20 @@ import { Icon } from '../../../../components/icon/icon'
 const EditQuestionContainer = ({ className }) => {
 	return (
 		<div className={className}>
-			<div>Вопрос 1:</div>
-			<div className='edit-question-active'>
-				<Button height='50px'>+</Button>
-				<EditAnswer></EditAnswer>
+			<div className='question-title'>Вопрос 1</div>
+			{/* <div className='edit-panel'>
+				<div className='edit-question-active'>
+					<Button height='50px'>+</Button>
+					<EditAnswer></EditAnswer>
+				</div>
+				<Icon
+					id='fa-trash-o'
+					className='delete-question'
+					margin='0px 0px 0px 0px'
+					size='100px'
+				/>
 			</div>
+
 			<div className='angle-down'>
 				<Icon
 					id='fa-angle-down'
@@ -24,7 +33,7 @@ const EditQuestionContainer = ({ className }) => {
 						size='35px'
 					/>
 				)}
-			</div>
+			</div> */}
 		</div>
 	)
 }
@@ -34,7 +43,17 @@ export const EditQuestion = styled(EditQuestionContainer)`
 	border: 1px solid #000;
 	border-radius: 10px;
 	padding: 10px;
-	margin-bottom: 80px;
+
+	& .question-title {
+		padding-top: 10px;
+		margin-bottom: 10px;
+	}
+
+	& .edit-panel {
+		display: flex;
+		align-items: center;
+		gap: 200px;
+	}
 
 	& .edit-question-active {
 		display: flex;

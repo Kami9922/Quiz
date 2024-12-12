@@ -1,9 +1,16 @@
 // const mongoose = require('mongoose')
+// const AnswerSchema = require('./Answer')
 
 // const QuestionSchema = mongoose.Schema({
 // 	question: {
-// 		type: String,
-// 		required: true,
+// 		content: {
+// 			type: String,
+// 			required: true,
+// 		},
+// 		answers: {
+// 			type: Array
+
+// 		},
 // 	},
 // })
 

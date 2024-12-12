@@ -2,6 +2,8 @@ const express = require('express')
 const chalk = require('chalk')
 const path = require('path')
 const mongoose = require('mongoose')
+const DEFAULT_TEST = require('./test')
+const Test = require('./models/test')
 
 const {
 	// addAnswer,
@@ -9,9 +11,8 @@ const {
 	removeTest,
 	editTest,
 } = require('./test.controller')
-const Test = require('./models/Test')
 
-const port = 3000
+const port = 3001
 
 const app = express()
 
@@ -29,7 +30,7 @@ app.use(
 app.get('/', async (req, res) => {
 	res.render('index', {
 		title: 'Express App',
-		notes: await getTest(),
+		test: await getTest(),
 		created: false,
 		error: false,
 	})
@@ -56,21 +57,21 @@ app.post('/', async (req, res) => {
 })
 
 app.put('/:id', async (req, res) => {
-	await editTest({ id: req.params.id, title: req.body.title })
+	await editAnswer({ id: req.params.id, title: req.body.title })
 
 	res.render('index', {
 		title: 'Express App',
-		notes: await getTest(),
+		test: await getTest(),
 		created: false,
 		error: false,
 	})
 })
 
 app.delete('/:id', async (req, res) => {
-	await removeTest(req.params)
+	await removeAnswer(req.params)
 	res.render('index', {
 		title: 'Express App',
-		notes: await getTest(),
+		test: await getTest(),
 		created: false,
 		error: false,
 	})
@@ -81,7 +82,10 @@ mongoose
 		'mongodb+srv://kami:jvtqhfthjljve111@cluster.coi65.mongodb.net/Tests?retryWrites=true&w=majority&appName=Cluster'
 	)
 	.then(async () => {
-		await Test.create({ test: 'Test' })
+		count = await Test.countDocuments({})
+		if (count === 0) {
+			await Test.create(DEFAULT_TEST)
+		}
 		app.listen(port, () => {
 			console.log(chalk.green(`Server has been started on port ${port}...`))
 		})

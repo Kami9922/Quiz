@@ -3,6 +3,7 @@ import styled from 'styled-components'
 const ButtonContainer = ({
 	children,
 	className,
+	margin,
 	width,
 	backgroundColor,
 	...props
@@ -21,6 +22,7 @@ export const Button = styled(ButtonContainer)`
 	justify-content: center;
 	align-items: center;
 	font-size: 18px;
+	margin: ${({ margin = '0' }) => margin};
 	width: ${({ width = '100%' }) => width};
 	height: ${({ height = '60px' }) => height};
 	background-color: ${({ backgroundColor = 'default' }) => backgroundColor};

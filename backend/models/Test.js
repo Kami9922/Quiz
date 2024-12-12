@@ -1,24 +1,21 @@
 const mongoose = require('mongoose')
+const { Schema } = mongoose
 
-const TestSchema = mongoose.Schema({
-	test: {
-		type: String,
-		questions: {
-			type: Array,
-			question: {
-				type: Object,
-				content: {
-					type: String,
-				},
-				answers: {
-					type: Array,
-					answer: {
-						type: String,
-					},
-				},
-			},
-		},
+const AnswerSchema = new Schema({
+	answer: {
+		content: String,
+		correct: Boolean,
 	},
+})
+
+const QuestionSchema = new Schema({
+	content: String,
+	answers: [AnswerSchema],
+})
+
+const TestSchema = new Schema({
+	title: String,
+	questions: [QuestionSchema],
 })
 
 const Test = mongoose.model('Test', TestSchema)

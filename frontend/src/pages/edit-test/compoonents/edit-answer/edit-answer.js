@@ -4,7 +4,8 @@ import { Icon } from '../../../../components/icon/icon'
 const EditAnswerContainer = ({ className }) => {
 	return (
 		<div className={className}>
-			<div className='answer-body'>Ответ 1</div>
+			{/* <div className='answer-body'>Ответ 1</div> */}
+			<textarea className='edit-answer-body'></textarea>
 			<div className='edit-answer-icon-container'>
 				<div>
 					<Icon
@@ -40,6 +41,15 @@ export const EditAnswer = styled(EditAnswerContainer)`
 		border-radius: 10px;
 		padding: 5px;
 		width: 100%;
+	}
+
+	& .edit-answer-body {
+		resize: none;
+		border: 1px solid #000;
+		border-radius: 10px;
+		padding: 5px;
+		width: 100%;
+		min-height: 100px;
 	}
 
 	& .edit-answer-icon-container {

@@ -1,10 +1,12 @@
 const chalk = require('chalk')
-const Test = require('./models/Test')
+
 const Answer = require('./models/Answer')
 const Question = require('./models/Question')
+const Test = require('./models/test')
 
 const getTest = async () => {
 	const test = await Test.find()
+
 	return test
 }
 
@@ -17,9 +19,17 @@ const getTest = async () => {
 // 	console.log(chalk.bgGreen('Question was added!'))
 // }
 
-const removeTest = async (id) => {
-	await Test.deleteOne({ id })
-	console.log(chalk.bgGreen('Note was removed!'))
+const removeAnswerOrQuestion = async (id) => {
+	const test = await Test.find()
+	const question = test.questions.id(id)
+	const answer = question.answers.id(id)
+	if (question) {
+		question.remove()
+	}
+	if (answer) {
+		answer.remove()
+	}
+	test.save(() => console.log(chalk.bgGreen('Note was removed!')))
 }
 
 const editTest = async (testData) => {
@@ -29,7 +39,7 @@ const editTest = async (testData) => {
 
 module.exports = {
 	// addAnswer,
-	removeTest,
+	// removeTest,
 	getTest,
-	editTest,
+	// editTest,
 }
