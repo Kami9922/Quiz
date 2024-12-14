@@ -2,20 +2,21 @@ const express = require('express')
 const chalk = require('chalk')
 const path = require('path')
 const mongoose = require('mongoose')
-const DEFAULT_TEST = require('./test')
+const DEFAULT_TEST = require('./constants/test')
 const Test = require('./models/test')
 
 const {
-	// addAnswer,
+	removeAnswer,
+	removeQuestion,
+	updateQuestion,
+	updateAnswer,
+	addAnswer,
+	addQuestion,
 	getTest,
-	removeTest,
-	editTest,
 } = require('./test.controller')
 
 const port = 3001
-
 const app = express()
-
 app.set('view engine', 'ejs')
 app.set('views', 'pages')
 
@@ -28,53 +29,54 @@ app.use(
 )
 
 app.get('/', async (req, res) => {
-	res.render('index', {
-		title: 'Express App',
-		test: await getTest(),
-		created: false,
-		error: false,
-	})
+	const test = await getTest()
+
+	res.json(test)
 })
 
-app.post('/', async (req, res) => {
-	try {
-		await addAnswer(req.body.test)
-		res.render('index', {
-			title: 'Express App',
-			question: await getTest(),
-			created: true,
-			error: false,
-		})
-	} catch (error) {
-		console.error('Creation error', error)
-		await addAnswer(req.body.title)
-		res.render('index', {
-			title: 'Express App',
-			created: false,
-			error: true,
-		})
-	}
+app.post('/questions', async (req, res) => {
+	const { content } = req.body
+
+	const updatedTest = await addQuestion(content)
+	res.json(updatedTest)
 })
 
-app.put('/:id', async (req, res) => {
-	await editAnswer({ id: req.params.id, title: req.body.title })
+app.post('/questions/:questionId/answers', async (req, res) => {
+	const { questionId } = req.params
+	const { content } = req.body
 
-	res.render('index', {
-		title: 'Express App',
-		test: await getTest(),
-		created: false,
-		error: false,
-	})
+	const updatedTest = await addAnswer(questionId, content)
+	res.json(updatedTest)
 })
 
-app.delete('/:id', async (req, res) => {
-	await removeAnswer(req.params)
-	res.render('index', {
-		title: 'Express App',
-		test: await getTest(),
-		created: false,
-		error: false,
-	})
+app.patch('/questions/:questionId', async (req, res) => {
+	const { questionId } = req.params
+	const updatedContent = req.body
+
+	const updatedTest = await updateQuestion(questionId, updatedContent)
+	res.json(updatedTest)
+})
+
+app.patch('/questions/:questionId/answers/:answerId', async (req, res) => {
+	const { questionId, answerId } = req.params
+	const updatedContent = req.body
+
+	const updatedTest = await updateAnswer(questionId, answerId, updatedContent)
+	res.json(updatedTest)
+})
+
+app.delete('/questions/:questionId', async (req, res) => {
+	const { questionId } = req.params
+
+	const updatedTest = await removeQuestion(questionId)
+	res.json(updatedTest)
+})
+
+app.delete('/questions/:questionId/answers/:answerId', async (req, res) => {
+	const { questionId, answerId } = req.params
+
+	const updatedTest = await removeAnswer(questionId, answerId)
+	res.json(updatedTest)
 })
 
 mongoose
