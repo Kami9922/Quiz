@@ -1,14 +1,16 @@
 import styled from 'styled-components'
 import { TestFinalScore } from './components/test-final-score'
-import { TestQuestion } from './components/test-question'
+import { TestContent } from './components/test-content'
 
 const TestBodyContainer = ({ className }) => {
 	return (
 		<div className={className}>
-			<TestQuestion />
+			<TestContent />
 			{!1 && <TestFinalScore />}
 		</div>
 	)
 }
 
-export const TestBody = styled(TestBodyContainer)``
+export const TestBody = styled(TestBodyContainer)`
+	padding: 0 25px;
+`

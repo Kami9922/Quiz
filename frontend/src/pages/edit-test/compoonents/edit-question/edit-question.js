@@ -7,7 +7,7 @@ const EditQuestionContainer = ({ className }) => {
 	return (
 		<div className={className}>
 			<div className='question-title'>Вопрос 1</div>
-			{/* <div className='edit-panel'>
+			<div className='edit-panel'>
 				<div className='edit-question-active'>
 					<Button height='50px'>+</Button>
 					<EditAnswer></EditAnswer>
@@ -33,7 +33,7 @@ const EditQuestionContainer = ({ className }) => {
 						size='35px'
 					/>
 				)}
-			</div> */}
+			</div>
 		</div>
 	)
 }

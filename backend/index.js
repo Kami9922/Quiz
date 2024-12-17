@@ -1,9 +1,9 @@
 const express = require('express')
 const chalk = require('chalk')
-const path = require('path')
 const mongoose = require('mongoose')
 const DEFAULT_TEST = require('./constants/test')
 const Test = require('./models/test')
+const cors = require('cors')
 
 const {
 	removeAnswer,
@@ -15,23 +15,33 @@ const {
 	getTest,
 } = require('./test.controller')
 
-const port = 3001
+const port = 5000
 const app = express()
-app.set('view engine', 'ejs')
-app.set('views', 'pages')
 
 app.use(express.json())
-app.use(express.static(path.resolve(__dirname, 'public')))
+
 app.use(
 	express.urlencoded({
 		extended: true,
 	})
 )
 
+app.use(cors())
+
 app.get('/', async (req, res) => {
 	const test = await getTest()
 
 	res.json(test)
+})
+
+app.get('/title', async (req, res) => {
+	const test = await Test.findOne()
+	res.json(test.title)
+})
+
+app.get('/questions', async (req, res) => {
+	const test = await Test.findOne()
+	res.json(test.questions)
 })
 
 app.post('/questions', async (req, res) => {

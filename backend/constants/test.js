@@ -8,7 +8,6 @@ const DEFAULT_TEST = {
 					content: 'Лондон',
 					correct: true,
 				},
-
 				{
 					content: 'Афины',
 					correct: false,
@@ -24,7 +23,7 @@ const DEFAULT_TEST = {
 				},
 
 				{
-					content: 'Санкт-Петербург',
+					content: 'Самара',
 					correct: false,
 				},
 			],

@@ -2,10 +2,8 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const AnswerSchema = new Schema({
-	answer: {
-		content: String,
-		correct: Boolean,
-	},
+	content: String,
+	correct: Boolean,
 })
 
 const QuestionSchema = new Schema({
