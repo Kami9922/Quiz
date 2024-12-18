@@ -40,7 +40,7 @@ const TestAnswerContainer = ({ className, answer, question }) => {
 					<Icon
 						className='icon-check'
 						id='fa-check'
-						margin='3px 0px 0px 14px'
+						margin='1px 0px 0px 14px'
 						size='11px'
 						onClick={unchooseAnswer}
 					/>

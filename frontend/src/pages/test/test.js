@@ -10,6 +10,7 @@ import { endTestSelector } from '../../selectors/end-test-selector'
 import { endTestAction } from '../../actions/end-test-action'
 import { useNavigate } from 'react-router-dom'
 import { resetState } from '../../actions/reset-state'
+import { formatDate } from './utils/format-date'
 
 const TestContainer = ({ className }) => {
 	const questions = useSelector(selectQuestions)
@@ -43,8 +44,17 @@ const TestContainer = ({ className }) => {
 	}
 
 	const onEndTest = () => {
-		const currentDate = new Date()
-		localStorage.setItem(currentDate, { questions, checkedAnswers })
+		const correctAnswers = checkedAnswers.filter(
+			(answer) => answer.correct === true
+		)
+		let currentDate = formatDate(new Date())
+		localStorage.setItem(
+			currentDate,
+			JSON.stringify({
+				answers: correctAnswers,
+				questionsLength: questions.length,
+			})
+		)
 		dispatch(endTestAction(true))
 	}
 

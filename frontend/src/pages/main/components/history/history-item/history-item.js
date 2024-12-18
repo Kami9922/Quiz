@@ -1,13 +1,17 @@
-import React from 'react'
 import styled from 'styled-components'
-import { SuccessRate, TestDate, QuestionsSum } from './components/index'
 
-const HistoryItemContainer = ({ className }) => {
+const HistoryItemContainer = ({ className, data, date }) => {
 	return (
 		<div className={className}>
-			<TestDate />
-			<QuestionsSum />
-			<SuccessRate />
+			<div className='date'>
+				<span>{date}</span>
+			</div>
+			<div className='history-questions'>
+				<span>{`Всего вопросов: ${data.questionsLength}`}</span>
+			</div>
+			<div className='history-result'>
+				<span>{`Верно: ${data.answers.length} из ${data.questionsLength}`}</span>
+			</div>
 		</div>
 	)
 }
@@ -21,4 +25,26 @@ export const HistoryItem = styled(HistoryItemContainer)`
 	align-items: center;
 	font-size: 20px;
 	padding: 0px 10px;
+
+	& .date {
+		display: flex;
+		font-size: 15px;
+		padding-bottom: 5px;
+		width: 200px;
+		font-weight: bold;
+		justify-content: center;
+		align-self: flex-end;
+	}
+	& .history-questions {
+		display: flex;
+		justify-content: center;
+		width: 200px;
+		text-decoration: underline;
+	}
+	& .history-result {
+		display: flex;
+		width: 200px;
+		justify-content: center;
+		text-decoration: underline;
+	}
 `
