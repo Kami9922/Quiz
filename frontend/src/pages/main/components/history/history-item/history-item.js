@@ -15,7 +15,6 @@ const HistoryItemContainer = ({ className }) => {
 export const HistoryItem = styled(HistoryItemContainer)`
 	border: 1px solid black;
 	border-radius: 10px;
-	width: 1000px;
 	height: 70px;
 	display: flex;
 	justify-content: space-between;

@@ -10,7 +10,11 @@ const TestQuestionContainer = ({ className, question }) => {
 			<div className='question'>{question.content}</div>
 			<ul className='answers-list'>
 				{answers.map((answer) => (
-					<TestAnswer answer={answer} />
+					<TestAnswer
+						key={answer._id}
+						answer={answer}
+						question={question}
+					/>
 				))}
 			</ul>
 		</li>
@@ -29,6 +33,6 @@ export const TestQuestion = styled(TestQuestionContainer)`
 
 	& .answers-list {
 		display: flex;
-		gap: 25px;
+		gap: 15px;
 	}
 `

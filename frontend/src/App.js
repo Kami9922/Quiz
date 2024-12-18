@@ -11,32 +11,32 @@ const AppColumn = styled.div`
 	background-color: #fff;
 	margin: 0 auto;
 `
-// const Page = styled.div`
-// 	padding: 120px 0 20px;
-// `
+const Page = styled.div`
+	padding: 60px 20px;
+`
 
 const App = () => {
 	return (
 		<AppColumn>
-			{/* <Page> */}
-			<Routes>
-				<Route
-					path='/'
-					element={<Main />}
-				/>
-				<Route
-					path='/test'
-					element={<Test />}
-				/>
-				<Route
-					path='/editTest'
-					element={<EditTest />}
-				/>
-				{/* <Route
+			<Page>
+				<Routes>
+					<Route
+						path='/'
+						element={<Main />}
+					/>
+					<Route
+						path='/test'
+						element={<Test />}
+					/>
+					<Route
+						path='/editTest'
+						element={<EditTest />}
+					/>
+					{/* <Route
 						path='*'
 						element={<Error error={} />}/> */}
-			</Routes>
-			{/* </Page> */}
+				</Routes>
+			</Page>
 		</AppColumn>
 	)
 }

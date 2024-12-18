@@ -1,11 +1,32 @@
 import styled from 'styled-components'
 import { Icon } from '../../../../../components/icon/icon'
+import { removeCheckedAnswer } from '../../../../../actions/remove-checked-answer'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCheckAnswers } from '../../../../../actions/set-checked-answers'
+import { selectCheckedAnswers } from '../../../../../selectors/checked-answers-selector'
 
-const TestAnswerContainer = ({ className, answer }) => {
+const TestAnswerContainer = ({ className, answer, question }) => {
+	const checkedAnswers = useSelector(selectCheckedAnswers)
+
+	const dispatch = useDispatch()
+
+	const chooseAnswer = () => {
+		const hasMatch = question.answers.some((answerFromQuestion) =>
+			checkedAnswers.some(
+				(checkedAnswer) => checkedAnswer._id === answerFromQuestion._id
+			)
+		)
+
+		if (!hasMatch) {
+			dispatch(setCheckAnswers(answer))
+		}
+	}
+	const unchooseAnswer = () => {
+		dispatch(removeCheckedAnswer(answer._id))
+	}
+
 	return (
-		<li
-			className={className}
-			key={answer._id}>
+		<li className={className}>
 			{answer.content}
 			<div className='answer-icons'>
 				<Icon
@@ -13,13 +34,15 @@ const TestAnswerContainer = ({ className, answer }) => {
 					id='fa-circle-o'
 					margin='0px 0px 0px 10px'
 					size='21px'
+					onClick={chooseAnswer}
 				/>
-				{1 && (
+				{checkedAnswers.includes(answer) && (
 					<Icon
 						className='icon-check'
 						id='fa-check'
-						margin='-20px 0px 0px 13px'
+						margin='3px 0px 0px 14px'
 						size='11px'
+						onClick={unchooseAnswer}
 					/>
 				)}
 			</div>
@@ -40,5 +63,13 @@ export const TestAnswer = styled(TestAnswerContainer)`
 	& .answer-icons {
 		display: flex;
 		align-items: center;
+	}
+
+	& .icon-check-field {
+		position: relative;
+	}
+
+	& .icon-check {
+		position: absolute;
 	}
 `

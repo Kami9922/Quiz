@@ -1,39 +1,83 @@
 import styled from 'styled-components'
 import { Button } from '../../components/button/button'
 import { TestBody } from './components/test-body/test-body'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectQuestions } from '../../selectors/questions-selector'
+import { saveCurrentQuestionIndex } from '../../actions/save-current-questions-index'
+import { selectCurrrentQuestionIndex } from '../../selectors/current-question-index-selector'
+import { selectCheckedAnswers } from '../../selectors/checked-answers-selector'
+import { endTestSelector } from '../../selectors/end-test-selector'
+import { endTestAction } from '../../actions/end-test-action'
+import { useNavigate } from 'react-router-dom'
+import { resetState } from '../../actions/reset-state'
 
 const TestContainer = ({ className }) => {
-	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
 	const questions = useSelector(selectQuestions)
+	const currentIndex = useSelector(selectCurrrentQuestionIndex)
+	const checkedAnswers = useSelector(selectCheckedAnswers)
+	const endTest = useSelector(endTestSelector)
 
-	const handleNextQuestion = () => {
-		setCurrentQuestionIndex((prevIndex) =>
-			Math.min(prevIndex + 1, questions.length - 1)
-		)
+	const navigate = useNavigate()
+
+	const dispatch = useDispatch()
+
+	const onGoToNextQuestion = () => {
+		const index =
+			currentIndex < questions.length + 1 ? currentIndex + 1 : currentIndex
+
+		dispatch(saveCurrentQuestionIndex(index))
 	}
 
-	const handlePrevQuestion = () => {
-		setCurrentQuestionIndex((prevIndex) => Math.max(prevIndex - 1, 0))
+	const onGoToPrevQuestion = () => {
+		const index = currentIndex - 1
+		dispatch(saveCurrentQuestionIndex(index))
+	}
+
+	const restartTest = () => {
+		dispatch(resetState)
+	}
+
+	const onGoToMain = () => {
+		dispatch(resetState)
+		navigate('/')
+	}
+
+	const onEndTest = () => {
+		const currentDate = new Date()
+		localStorage.setItem(currentDate, { questions, checkedAnswers })
+		dispatch(endTestAction(true))
 	}
 
 	return (
 		<div className={className}>
 			<TestBody />
-			<div className='test-buttons'>
-				<Button
-					onClick={handlePrevQuestion}
-					disabled={currentQuestionIndex === 0}>
-					Предыдущий вопрос
-				</Button>
-				<Button
-					onClick={handleNextQuestion}
-					disabled={currentQuestionIndex >= questions.length - 1}>
-					Следующий вопрос
-				</Button>
-			</div>
+			{!endTest ? (
+				<div className='test-buttons'>
+					<Button
+						onClick={onGoToPrevQuestion}
+						disabled={currentIndex === 0}>
+						Предыдущий вопрос
+					</Button>
+					{currentIndex < questions.length - 1 ? (
+						<Button
+							onClick={onGoToNextQuestion}
+							disabled={currentIndex >= questions.length - 1}>
+							Следующий вопрос
+						</Button>
+					) : (
+						<Button
+							disabled={questions.length !== checkedAnswers.length}
+							onClick={onEndTest}>
+							Завершить тест
+						</Button>
+					)}
+				</div>
+			) : (
+				<div className='test-buttons'>
+					<Button onClick={onGoToMain}>На главную</Button>
+					<Button onClick={restartTest}>Пройти ещё раз</Button>
+				</div>
+			)}
 		</div>
 	)
 }
