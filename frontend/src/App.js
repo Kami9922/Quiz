@@ -1,6 +1,9 @@
 import { Route, Routes } from 'react-router-dom'
 import styled from 'styled-components'
 import { Test, EditTest, Main } from './pages/index'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { saveQuestionsAsync } from './actions/index'
 
 const AppColumn = styled.div`
 	display: flex;
@@ -16,6 +19,12 @@ const Page = styled.div`
 `
 
 const App = () => {
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(saveQuestionsAsync())
+	}, [dispatch])
+
 	return (
 		<AppColumn>
 			<Page>

@@ -33,18 +33,26 @@ export const HistoryItem = styled(HistoryItemContainer)`
 		width: 200px;
 		font-weight: bold;
 		justify-content: center;
-		align-self: flex-end;
+		border: 1px solid #000;
+		border-radius: 15px;
+		padding: 10px;
+		align-self: center;
 	}
 	& .history-questions {
 		display: flex;
 		justify-content: center;
 		width: 200px;
-		text-decoration: underline;
+		border: 1px solid #000;
+		padding: 10px;
+		border-radius: 15px;
+		border-radius: 15px;
 	}
 	& .history-result {
 		display: flex;
 		width: 200px;
 		justify-content: center;
-		text-decoration: underline;
+		border: 1px solid #000;
+		padding: 10px;
+		border-radius: 15px;
 	}
 `

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { HistoryItem } from './history-item/history-item'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectStorageData } from '../../../../selectors/main-selectors/storage-data-selector'
-import { getLocalStorageData } from '../../../../actions/get-local-storage-data'
+import { getLocalStorageData } from '../../../../actions/index'
 
 const HistoryContainer = ({ className }) => {
 	const dispatch = useDispatch()

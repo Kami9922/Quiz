@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { selectQuestions } from '../../../../../selectors/questions-selector'
-import { selectCheckedAnswers } from '../../../../../selectors/checked-answers-selector'
+import {
+	selectQuestions,
+	selectCheckedAnswers,
+} from '../../../../../selectors/test-selectors/index'
 
 const TestFinalScoreContainer = ({ className }) => {
 	const questions = useSelector(selectQuestions)

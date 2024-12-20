@@ -1,11 +1,41 @@
 import styled from 'styled-components'
 import { Icon } from '../../../../components/icon/icon'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectEditingAnswerValue } from '../../../../selectors/edit-selectors/index'
+import { editingAnswerAreaValue } from '../../../../actions'
+import { useState } from 'react'
 
-const EditAnswerContainer = ({ className }) => {
+const EditAnswerContainer = ({ className, children, answers, answer, key }) => {
+	// const checkingFlag = useSelector(selectcheckingFlag)
+	const editingAnswerValue = useSelector(selectEditingAnswerValue)
+	const dispatch = useDispatch()
+	const [isCorrectFlag, setIsCorrectFlag] = useState()
+
+	const onCheck = () => {
+		if (!isCorrectFlag) {
+			setIsCorrectFlag(true)
+			// dispatch(setCheckToSave(!checkingFlag))
+		}
+	}
+	const onUncheck = () => {
+		if (isCorrectFlag) {
+			setIsCorrectFlag(false)
+			// dispatch(setCheckToSave(!checkingFlag))
+		}
+	}
+
+	const onEditingAnswer = (value) => {
+		dispatch(editingAnswerAreaValue(value))
+	}
+
 	return (
 		<div className={className}>
-			{/* <div className='answer-body'>Ответ 1</div> */}
-			<textarea className='edit-answer-body'></textarea>
+			<textarea
+				value={editingAnswerValue}
+				onChange={({ target }) => onEditingAnswer(target.value)}
+				placeholder={children ? children : 'Введите текст ответа...'}
+				className='edit-answer-area'></textarea>
+
 			<div className='edit-answer-icon-container'>
 				<div>
 					<Icon
@@ -13,13 +43,15 @@ const EditAnswerContainer = ({ className }) => {
 						id='fa-circle-o'
 						margin='0px 0px 0px 10px'
 						size='21px'
+						onClick={onCheck}
 					/>
-					{!1 && (
+					{isCorrectFlag && (
 						<Icon
 							className='icon-check'
 							id='fa-check'
-							margin='-20px 0px 0px 13px'
+							margin='-18px 0px 0px 13px'
 							size='11px'
+							onClick={onUncheck}
 						/>
 					)}
 				</div>
@@ -38,18 +70,17 @@ export const EditAnswer = styled(EditAnswerContainer)`
 	margin-bottom: 10px;
 	& .answer-body {
 		border: 1px solid #000;
-		border-radius: 10px;
+		border-radius: 5px;
 		padding: 5px;
 		width: 100%;
 	}
 
-	& .edit-answer-body {
+	& .edit-answer-area {
 		resize: none;
 		border: 1px solid #000;
 		border-radius: 10px;
 		padding: 5px;
 		width: 100%;
-		min-height: 100px;
 	}
 
 	& .edit-answer-icon-container {

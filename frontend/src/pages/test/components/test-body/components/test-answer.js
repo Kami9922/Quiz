@@ -1,9 +1,13 @@
 import styled from 'styled-components'
 import { Icon } from '../../../../../components/icon/icon'
-import { removeCheckedAnswer } from '../../../../../actions/remove-checked-answer'
+import {
+	removeCheckedAnswer,
+	setCheckAnswers,
+} from '../../../../../actions/index'
+
 import { useDispatch, useSelector } from 'react-redux'
-import { setCheckAnswers } from '../../../../../actions/set-checked-answers'
-import { selectCheckedAnswers } from '../../../../../selectors/checked-answers-selector'
+import { selectCheckedAnswers } from '../../../../../selectors/test-selectors/index'
+import { findAnswerMatch } from '../../../utils/find-answer-match'
 
 const TestAnswerContainer = ({ className, answer, question }) => {
 	const checkedAnswers = useSelector(selectCheckedAnswers)
@@ -11,11 +15,7 @@ const TestAnswerContainer = ({ className, answer, question }) => {
 	const dispatch = useDispatch()
 
 	const chooseAnswer = () => {
-		const hasMatch = question.answers.some((answerFromQuestion) =>
-			checkedAnswers.some(
-				(checkedAnswer) => checkedAnswer._id === answerFromQuestion._id
-			)
-		)
+		const hasMatch = findAnswerMatch(question, checkedAnswers)
 
 		if (!hasMatch) {
 			dispatch(setCheckAnswers(answer))

@@ -8,7 +8,7 @@ export const mainReducer = (state = initialMainState, { type, payload }) => {
 		case 'GET_LOCAL_STORAGE_DATA':
 			return {
 				...state,
-				storageData: [...state.storageData, { ...payload }],
+				storageData: [{ ...payload }, ...state.storageData],
 			}
 		case 'SET_FORMATTED_DATE':
 			return {

@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react'
 import { TestQuestion } from './test-question'
 import { fetchTitle } from '../../../../../operations/fetch-title'
 import { useSelector } from 'react-redux'
-import { selectQuestions } from '../../../../../selectors/questions-selector'
-import { selectCurrrentQuestionIndex } from '../../../../../selectors/current-question-index-selector'
-import { saveQuestionsAsync } from '../../../../../actions/save-questions-async'
 import { useDispatch } from 'react-redux'
-import { setCurrentQuestion } from '../../../../../actions/set-current-question'
-import { selectCurrentQuestion } from '../../../../../selectors/current-question-selector'
+import { setCurrentQuestion } from '../../../../../actions/index'
+import {
+	selectQuestions,
+	selectCurrrentQuestionIndex,
+	selectCurrentQuestion,
+} from '../../../../../selectors/test-selectors/index'
 
 const TestContentContainer = ({ className }) => {
 	const questions = useSelector(selectQuestions)
@@ -28,7 +29,6 @@ const TestContentContainer = ({ className }) => {
 				console.error('Error fetching title:', error)
 			}
 		}
-		dispatch(saveQuestionsAsync())
 
 		loadTitle()
 	}, [dispatch])

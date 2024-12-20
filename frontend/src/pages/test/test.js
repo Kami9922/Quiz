@@ -2,21 +2,29 @@ import styled from 'styled-components'
 import { Button } from '../../components/button/button'
 import { TestBody } from './components/test-body/test-body'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectQuestions } from '../../selectors/questions-selector'
-import { saveCurrentQuestionIndex } from '../../actions/save-current-questions-index'
-import { selectCurrrentQuestionIndex } from '../../selectors/current-question-index-selector'
-import { selectCheckedAnswers } from '../../selectors/checked-answers-selector'
-import { endTestSelector } from '../../selectors/end-test-selector'
-import { endTestAction } from '../../actions/end-test-action'
+import {
+	saveCurrentQuestionIndex,
+	endTestAction,
+	resetState,
+} from '../../actions/index'
 import { useNavigate } from 'react-router-dom'
-import { resetState } from '../../actions/reset-state'
 import { formatDate } from './utils/format-date'
+
+import {
+	endTestSelector,
+	selectCheckedAnswers,
+	selectQuestions,
+	selectCurrentQuestion,
+	selectCurrrentQuestionIndex,
+} from '../../selectors/test-selectors/index'
+import { findAnswerMatch } from './utils/find-answer-match'
 
 const TestContainer = ({ className }) => {
 	const questions = useSelector(selectQuestions)
 	const currentIndex = useSelector(selectCurrrentQuestionIndex)
 	const checkedAnswers = useSelector(selectCheckedAnswers)
 	const endTest = useSelector(endTestSelector)
+	const currentQuestion = useSelector(selectCurrentQuestion)
 
 	const navigate = useNavigate()
 
@@ -71,7 +79,10 @@ const TestContainer = ({ className }) => {
 					{currentIndex < questions.length - 1 ? (
 						<Button
 							onClick={onGoToNextQuestion}
-							disabled={currentIndex >= questions.length - 1}>
+							disabled={
+								findAnswerMatch(currentQuestion, checkedAnswers) ? false : true
+								// currentIndex >= questions.length - 1
+							}>
 							Следующий вопрос
 						</Button>
 					) : (
@@ -96,5 +107,8 @@ export const Test = styled(TestContainer)`
 	& .test-buttons {
 		gap: 10px;
 		display: flex;
+		button {
+			border: none;
+		}
 	}
 `

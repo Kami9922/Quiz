@@ -13,7 +13,13 @@ const MainButtonsContainer = ({ className }) => {
 				onClick={() => navigate('/test')}>
 				Запустить тест
 			</Button>
-			<Button className='main-button'>Редактировать тест</Button>
+			<Button
+				className='main-button'
+				onClick={() => {
+					navigate('/editTest')
+				}}>
+				Редактировать тест
+			</Button>
 		</div>
 	)
 }
@@ -22,4 +28,7 @@ export const MainButtons = styled(MainButtonsContainer)`
 	display: flex;
 	gap: 10px;
 	margin-bottom: 45px;
+	button {
+		border: none;
+	}
 `
